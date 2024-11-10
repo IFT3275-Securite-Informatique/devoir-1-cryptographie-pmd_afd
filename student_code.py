@@ -3,7 +3,8 @@ def decrypt(C):
   #entrez votre code ici.
   #Vous pouvez créer des fonctions auxiliaires et adapter le code à votre façon mais decrypt dois renvoyer le message décrypté
 
-
+  from collections import Counter
+  import requests
   def cut_string_into_pairs(text):
     """
     Découpe la chaîne de caractères en paires de caractères.
