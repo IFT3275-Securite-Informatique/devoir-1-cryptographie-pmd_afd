@@ -14,7 +14,7 @@ def decrypt(C):
         pairs.append(text[-1] + '_')  # Ajouter un "_" pour les chaînes impaires
     return pairs
 
-def load_text_from_web(url):
+  def load_text_from_web(url):
     """
     Charge le texte à partir d'une URL donnée et retourne le contenu en texte brut.
     """
@@ -26,13 +26,13 @@ def load_text_from_web(url):
         print(f"Erreur lors du chargement du texte : {e}")
         return None
 
-def split_into_8bit_chunks(text):
+  def split_into_8bit_chunks(text):
     """
     Divise le texte en blocs de 8 bits pour chaque symbole.
     """
     return [text[i:i+8] for i in range(0, len(text), 8)]
 
-def calculate_symbol_frequencies(bit_chunks):
+  def calculate_symbol_frequencies(bit_chunks):
     """
     Calcule les fréquences de chaque bloc de 8 bits.
     Retourne un dictionnaire trié par fréquence décroissante.
@@ -41,7 +41,7 @@ def calculate_symbol_frequencies(bit_chunks):
     total_symboles = sum(compte_symboles.values())
     return {symbole: (compte / total_symboles) * 100 for symbole, compte in compte_symboles.most_common()}
 
-def get_french_frequencies():
+  def get_french_frequencies():
     """
     Calcule les fréquences des symboles et paires de caractères fréquents dans un texte français.
     """
@@ -58,7 +58,7 @@ def get_french_frequencies():
     total_symboles = sum(compte_symboles.values())
     return {symbole: (compte / total_symboles) * 100 for symbole, compte in compte_symboles.most_common()}
 
-def associer_symboles_les_plus_proches(dico1, dico2):
+  def associer_symboles_les_plus_proches(dico1, dico2):
     """
     Associe les symboles de dico1 aux symboles de dico2 avec les fréquences les plus proches.
     """
@@ -72,7 +72,7 @@ def associer_symboles_les_plus_proches(dico1, dico2):
 
     return associations
 
-def decrypt(bit_chunks, substitution_key):
+  def decrypt_with_key(bit_chunks, substitution_key):
     """
     Déchiffre les blocs de 8 bits en utilisant une clé de substitution.
     Remplace par '?' si la clé n'existe pas.
@@ -81,18 +81,17 @@ def decrypt(bit_chunks, substitution_key):
 
 
 # Diviser le texte chiffré en blocs de 8 bits
-bit_chunks = split_into_8bit_chunks(C)
-bit_chunks_freq = calculate_symbol_frequencies(bit_chunks)
+  bit_chunks = split_into_8bit_chunks(C)
+  bit_chunks_freq = calculate_symbol_frequencies(bit_chunks)
 
 # Obtenir les fréquences des symboles en français
-frequent_chars = get_french_frequencies()
+  frequent_chars = get_french_frequencies()
 
 
 # Dériver la clé de substitution à partir des blocs de 8 bits
-substitution_key = associer_symboles_les_plus_proches(bit_chunks_freq, frequent_chars)
+  substitution_key = associer_symboles_les_plus_proches(bit_chunks_freq, frequent_chars)
 
 # Décoder le texte
-M = decrypt(bit_chunks, substitution_key)
+  M = decrypt_with_key(bit_chunks, substitution_key)
 
-  
   return M
